@@ -73,9 +73,11 @@ namespace ImportService
             {
                 if (GetIdleFile(e.FullPath))
                 {
+                    // LOG: file found and data import started
 
                     BusinessLogic.ImportData(e.Name, e.FullPath);
 
+                    // LOG: data import complete
                 }
             }
             catch (Exception ex)
