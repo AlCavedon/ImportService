@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\BusinessLogic.cs" />
+    <Compile Include="BusinessLogic\CsvFileReaderClass.cs" />
     <Compile Include="Framework\ConsoleHarness.cs" />
     <Compile Include="Framework\IWindowsService.cs" />
     <Compile Include="Framework\TypeExtensions.cs" />
