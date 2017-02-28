@@ -75,7 +75,7 @@ namespace ImportService
                 {
                     // LOG: file found and data import started
 
-                    BusinessLogic.ImportData(e.Name, e.FullPath);
+                    BusinessLogic.BusinessLogic.ImportDataFedEx(e.Name, e.FullPath);
 
                     // LOG: data import complete
                 }

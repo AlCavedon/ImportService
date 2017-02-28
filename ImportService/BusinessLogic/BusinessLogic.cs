@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ImportService.BusinessLogic.CsvFileReaderClass;
+using ImportService.Objects;
 
 namespace ImportService.BusinessLogic
 {
@@ -19,9 +20,9 @@ namespace ImportService.BusinessLogic
             }
         }
 
-        public static void ImportData(String fileName, String fullPath)
+        public static void ImportDataFedEx(String fileName, String fullPath)
         {
-
+            //ALS: no db...
             //ClientsDataClassesDataContext clientdb = new ClientsDataClassesDataContext();
             //FreightBillDataClassesDataContext fbdb = new FreightBillDataClassesDataContext();
 
@@ -32,6 +33,7 @@ namespace ImportService.BusinessLogic
             // get total from the K column - used for validation - it equals the total invoice amount
             Decimal TotalInvoice = 0;
             Decimal TotalInvoiceValidate = 0;
+
             //calulate this Fridays date 
             var today = DateTime.Today;
             var startDay = ((int)today.DayOfWeek);
@@ -43,7 +45,7 @@ namespace ImportService.BusinessLogic
             DateTime DueDate = thisFriday;
             String InvoiceNumber = String.Format("{0}HOP10", thisFriday.ToString("MMddyy")); //.Replace("/", ""));
 
-            //set up the variables
+            // init the variables
             String RecipentNumber = String.Empty;
             String AccountNumber = String.Empty;
             String InvTypeCode = String.Empty;
@@ -51,6 +53,7 @@ namespace ImportService.BusinessLogic
             String ProDate = String.Empty;
             String Ref1 = String.Empty;
             String Ref2 = String.Empty;
+            String Ref3 = String.Empty;
             String PayCode = String.Empty;
             int Pieces = 0;
             String ProNumber = String.Empty;
@@ -84,8 +87,10 @@ namespace ImportService.BusinessLogic
             //fullPath = String.Format("{0}{1}", fullPath, fileName);
             CsvFileClass.CsvFile[] CsvFile;
             var f = File.ReadAllLines(fullPath);
+
             int lCount = f.Length;
             CsvFile = new CsvFileClass.CsvFile[lCount];
+
             using (CsvFileReader reader = new CsvFileReader(fullPath))
             {
                 bool hasRow = true;
@@ -110,11 +115,12 @@ namespace ImportService.BusinessLogic
                     {
                         RecipentNumber = Convert.ToString(row[1]),
                         AccountNumber = Convert.ToString(row[2]),
-                        InvTypeCode = Convert.ToString(row[6]),
-                        InvDetailCode = Convert.ToString(row[7]),
-                        ProDate = Convert.ToString(row[11]),
-                        Ref1 = Convert.ToString(row[15]),
-                        Ref2 = Convert.ToString(row[16]),
+                        //InvTypeCode = Convert.ToString(row[6]),
+                        //InvDetailCode = Convert.ToString(row[7]),
+                        ProDate = Convert.ToString(row[14]),
+                        Ref1 = Convert.ToString(row[49]),
+                        Ref2 = Convert.ToString(row[50]),
+                        Ref3 =  Convert.ToString(row[51]),
                         PayCode = Convert.ToString(row[17]),
                         Pieces = Convert.ToString(row[18]),
                         ProNumber = Convert.ToString(row[20]),
@@ -337,7 +343,7 @@ namespace ImportService.BusinessLogic
                     //get shipper addressid or GetShippersIdreate the address and return the id
                     //ShippersId
                     int ShippersId = GetShippersId(id, ShipperName, ShipperCity, ShipperState, ShipperZip);
-                    //get consignees addressid or create the address and return the id
+                    //get consignees addressid or create the address and return the id;
                     //ConsigneesId
                     int ConsigneesId = GetConsigneesId(id, ConsigneeName, ConsigneeCity, ConsigneeState, ConsigneeZip);
 

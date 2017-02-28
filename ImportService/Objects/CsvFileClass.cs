@@ -18,6 +18,7 @@ namespace ImportService.Objects
             public String ProDate { get; set; }
             public String Ref1 { get; set; }
             public String Ref2 { get; set; }
+            public String Ref3 { get; set; }
             public String PayCode { get; set; }
             public String Pieces { get; set; }
             public String ProNumber { get; set; }
