@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+//using LinqToExcel;
 using System.Text;
 using System.Threading.Tasks;
 using static ImportService.BusinessLogic.CsvFileReaderClass;
@@ -178,7 +179,6 @@ namespace ImportService.BusinessLogic
                     FSC = 0;
                 }
 
-
                 if (TotalInvoice != TotalInvoiceValidate && FBInvoiceNumber != CsvFile[i].FBInvoiceNumber)
                 {
                     writelog(String.Format("VALIDATION ERROR! Total Invoice {0} is not equal to all of the records {1} for Invoice Number {2}", TotalInvoice, TotalInvoiceValidate, FBInvoiceNumber));
@@ -195,13 +195,14 @@ namespace ImportService.BusinessLogic
 
                 while (i < CsvFile.Length && TrackingNumber == CsvFile[i].ProNumber && FBInvoiceNumber == CsvFile[i].FBInvoiceNumber)
                 {
-                    RecipentNumber = CsvFile[i].RecipentNumber;
-                    CarrierAcctNumber = CsvFile[i].AccountNumber;
-                    InvTypeCode = CsvFile[i].InvTypeCode;
-                    InvDetailCode = CsvFile[i].InvDetailCode;
+                    //RecipentNumber = CsvFile[i].RecipentNumber;
+                    //CarrierAcctNumber = CsvFile[i].AccountNumber;
+                    //InvTypeCode = CsvFile[i].InvTypeCode;
+                    //InvDetailCode = CsvFile[i].InvDetailCode;
                     ProDate = CsvFile[i].ProDate;
                     Ref1 = CsvFile[i].Ref1;
                     Ref2 = CsvFile[i].Ref2;
+                    Ref3 = CsvFile[i].Ref3;
                     PayCode = CsvFile[i].PayCode;
                     int result = 0;
                     if (int.TryParse(CsvFile[i].Pieces, out result))
@@ -226,8 +227,8 @@ namespace ImportService.BusinessLogic
                     {
                         BilledWeight = Convert.ToInt32(CsvFile[i].BilledWeight);
                     }
-                    ChargeClassCode = CsvFile[i].ChargeClassCode;
-                    ProTransNote = CsvFile[i].ProTransNote;
+                    //ChargeClassCode = CsvFile[i].ChargeClassCode;
+                    //ProTransNote = CsvFile[i].ProTransNote;
                     if (CsvFile[i].FSCCheck == "FSC")
                     {
                         FSC += Convert.ToDecimal(CsvFile[i].PayAmount);
@@ -239,8 +240,8 @@ namespace ImportService.BusinessLogic
                     }
 
                     ShipperName = CsvFile[i].ShipperName;
-                    ShipperAddress1 = CsvFile[i].ShipperAddress1;
-                    ShipperAddress2 = CsvFile[i].ShipperAddress2;
+                    //ShipperAddress1 = CsvFile[i].ShipperAddress1;
+                    //ShipperAddress2 = CsvFile[i].ShipperAddress2;
                     ShipperCity = CsvFile[i].ShipperCity;
                     ShipperState = CsvFile[i].ShipperState;
                     if (CsvFile[i].ShipperZip.Length > 5)
@@ -251,10 +252,10 @@ namespace ImportService.BusinessLogic
                     {
                         ShipperZip = CsvFile[i].ShipperZip;
                     }
-                    ShipperCountry = CsvFile[i].ShipperCountry;
+                    //ShipperCountry = CsvFile[i].ShipperCountry;
                     ConsigneeName = CsvFile[i].ConsigneeName;
-                    ConsigneeAddress1 = CsvFile[i].ConsigneeAddress1;
-                    ConsigneeAddress2 = CsvFile[i].ConsigneeAddress2;
+                    //ConsigneeAddress1 = CsvFile[i].ConsigneeAddress1;
+                    //ConsigneeAddress2 = CsvFile[i].ConsigneeAddress2;
                     ConsigneeCity = CsvFile[i].ConsigneeCity;
                     ConsigneeState = CsvFile[i].ConsigneeState;
                     if (CsvFile[i].ConsigneeZip.Length > 5)
@@ -265,7 +266,7 @@ namespace ImportService.BusinessLogic
                     {
                         ConsigneeZip = CsvFile[i].ConsigneeZip;
                     }
-                    ConsigneeCountry = CsvFile[i].ConsigneeCountry;
+                    //ConsigneeCountry = CsvFile[i].ConsigneeCountry;
                     Status = "O";
                     //apply the rules
                     if ((ConsigneeName != null && ConsigneeCity != null & ConsigneeZip != null) && ConsigneeState == null)
@@ -328,9 +329,11 @@ namespace ImportService.BusinessLogic
                 i--;
                 // create the freight bill
                 //get the clientid
-                var id = (from c in clientdb.Clients
-                          where c.Code == "HOP10"
-                          select c.ClientsId).FirstOrDefault();
+                //ALS: need db
+                //var id = (from c in clientdb.Clients
+                //          where c.Code == "HOP10"
+                //          select c.ClientsId).FirstOrDefault();
+                Guid id = new Guid("6c800fed-1b77-4bfe-8244-cfc246448594"); //PPP10 sample
 
                 if (id != Guid.Empty && ProNumber != "")
                 {
