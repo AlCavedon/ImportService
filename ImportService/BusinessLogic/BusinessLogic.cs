@@ -47,7 +47,7 @@ namespace ImportService.BusinessLogic
 
             // init the variables
             String RecipentNumber = String.Empty;
-            String AccountNumber = String.Empty;
+            String CarrierAcctNumber = String.Empty;
             String InvTypeCode = String.Empty;
             String InvDetailCode = String.Empty;
             String ProDate = String.Empty;
@@ -113,40 +113,42 @@ namespace ImportService.BusinessLogic
                 {
                     CsvFile[i] = new CsvFileClass.CsvFile
                     {
-                        RecipentNumber = Convert.ToString(row[1]),
-                        AccountNumber = Convert.ToString(row[2]),
+                        // row array is zero base...
+                        //RecipentNumber = Convert.ToString(row[1]),
+                        AccountNumber = Convert.ToString(row[0]),
                         //InvTypeCode = Convert.ToString(row[6]),
                         //InvDetailCode = Convert.ToString(row[7]),
-                        ProDate = Convert.ToString(row[14]),
-                        Ref1 = Convert.ToString(row[49]),
-                        Ref2 = Convert.ToString(row[50]),
-                        Ref3 =  Convert.ToString(row[51]),
+                        ProDate = Convert.ToString(row[13]),
+                        Ref1 = Convert.ToString(row[48]),
+                        Ref2 = Convert.ToString(row[49]),
+                        Ref3 =  Convert.ToString(row[50]),
                         PayCode = Convert.ToString(row[17]),
                         Pieces = Convert.ToString(row[18]),
                         ProNumber = Convert.ToString(row[20]),
                         ActualWeight = Convert.ToString(row[26].ToString()),
                         BilledWeight = Convert.ToString(row[28].ToString()),
-                        ChargeClassCode = Convert.ToString(row[43]),
-                        ProTransNote = Convert.ToString(row[45]),
-                        FSCCheck = Convert.ToString(row[43]),
-                        PayAmount = Convert.ToString(row[52].ToString()),
-                        ShipperName = Convert.ToString(row[67]),
-                        ShipperAddress1 = Convert.ToString(row[68]),
-                        ShipperAddress2 = Convert.ToString(row[69]),
-                        ShipperCity = Convert.ToString(row[70]),
-                        ShipperState = Convert.ToString(row[71]),
-                        ShipperZip = Convert.ToString(row[72]),
-                        ShipperCountry = Convert.ToString(row[73]),
-                        ConsigneeName = Convert.ToString(row[75]),
-                        ConsigneeAddress1 = Convert.ToString(row[76]),
-                        ConsigneeAddress2 = Convert.ToString(row[77]),
-                        ConsigneeCity = Convert.ToString(row[78]),
-                        ConsigneeState = Convert.ToString(row[79]),
-                        ConsigneeZip = Convert.ToString(row[80]),
-                        ErrorCodeCheck = Convert.ToString(row[2]),
-                        PaymentType = Convert.ToString(row[17]),
-                        TotalInvoice = Convert.ToString(row[10]),
-                        FBInvoiceNumber = Convert.ToString(row[5])
+                        //ChargeClassCode = Convert.ToString(row[43]),
+                        //ProTransNote = Convert.ToString(row[45]),
+                        //FSCCheck = Convert.ToString(row[43]),
+                        PayAmount = Convert.ToString(row[10].ToString()),  // bill and pay amounts
+                        ShipperName = Convert.ToString(row[40]),
+                        //ShipperAddress1 = Convert.ToString(row[68]),
+                        //ShipperAddress2 = Convert.ToString(row[69]),
+                        ShipperCity = Convert.ToString(row[444]),
+                        ShipperState = Convert.ToString(row[45]),
+                        ShipperZip = Convert.ToString(row[46]),
+                        //ShipperCountry = Convert.ToString(row[73]),
+                        ConsigneeName = Convert.ToString(row[33]),
+                        //ConsigneeAddress1 = Convert.ToString(row[76]),
+                        //ConsigneeAddress2 = Convert.ToString(row[77]),
+                        ConsigneeCity = Convert.ToString(row[36]),
+                        ConsigneeState = Convert.ToString(row[37]),
+                        ConsigneeZip = Convert.ToString(row[38]),
+                        //ErrorCodeCheck = Convert.ToString(row[2]),
+                        PaymentType = Convert.ToString(row[6]),
+                        //TotalInvoice = Convert.ToString(row[10]),
+                        PieceCount = Convert.ToString(row[22])
+                       // FBInvoiceNumber = Convert.ToString(row[5])
 
                     };
                     i++;
@@ -194,7 +196,7 @@ namespace ImportService.BusinessLogic
                 while (i < CsvFile.Length && TrackingNumber == CsvFile[i].ProNumber && FBInvoiceNumber == CsvFile[i].FBInvoiceNumber)
                 {
                     RecipentNumber = CsvFile[i].RecipentNumber;
-                    AccountNumber = CsvFile[i].AccountNumber;
+                    CarrierAcctNumber = CsvFile[i].AccountNumber;
                     InvTypeCode = CsvFile[i].InvTypeCode;
                     InvDetailCode = CsvFile[i].InvDetailCode;
                     ProDate = CsvFile[i].ProDate;
@@ -337,9 +339,9 @@ namespace ImportService.BusinessLogic
 
                     //id is the ClientsId 
 
-                    //get the CarrierScac
-                    //CarrierSCACsId
-                    int CarrierSCACsId = GetCarrierSCACsId("UPSI");
+                    //get the CarrierSCACsId for FEDX
+                    int CarrierSCACsId = GetCarrierSCACsId("FEDX");
+
                     //get shipper addressid or GetShippersIdreate the address and return the id
                     //ShippersId
                     int ShippersId = GetShippersId(id, ShipperName, ShipperCity, ShipperState, ShipperZip);

@@ -50,6 +50,7 @@ namespace ImportService.Objects
             public String ErrorCodeCheck { get; set; }
             public String PaymentType { get; set; }
             public String TotalInvoice { get; set; }
+            public String PieceCount { get; set; }
             public String FBInvoiceNumber { get; set; }
             public String SLCode { get; set; }
             public String ServiceLevel { get; set; }
